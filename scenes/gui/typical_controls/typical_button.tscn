@@ -1,0 +1,148 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/gui/typical_controls/typical_button.gd" type="Script" id=1]
+[ext_resource path="res://scenes/gui/typical_controls/nine_patch_button.tscn" type="PackedScene" id=2]
+[ext_resource path="res://textures_packed/gui/button_normal.tres" type="Texture" id=3]
+[ext_resource path="res://textures_packed/gui/button_pressed.tres" type="Texture" id=4]
+[ext_resource path="res://textures_packed/gui/button_disabled.tres" type="Texture" id=5]
+[ext_resource path="res://fonts/scumm-8.fnt" type="BitmapFont" id=6]
+
+[sub_resource type="Theme" id=1]
+
+
+[sub_resource type="Theme" id=2]
+
+
+[node name="TypicalButton" type="Control"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -924.0
+margin_bottom = -580.0
+rect_min_size = Vector2( 20, 20 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+theme = SubResource( 1 )
+script = ExtResource( 1 )
+text = ""
+disabled = false
+icon = null
+pressed = false
+
+[node name="btn" parent="." instance=ExtResource( 2 )]
+light_mask = 32
+rect_min_size = Vector2( 20, 14 )
+theme = SubResource( 2 )
+text = ""
+normal_texture = ExtResource( 3 )
+normal_patch_margin_left = 3
+normal_patch_margin_right = 3
+normal_patch_margin_top = 3
+normal_patch_margin_bottom = 3
+pressed_texture = ExtResource( 4 )
+pressed_patch_margin_left = 3
+pressed_patch_margin_right = 3
+pressed_patch_margin_top = 3
+pressed_patch_margin_bottom = 3
+disabled_texture = ExtResource( 5 )
+disabled_patch_margin_left = 3
+disabled_patch_margin_right = 3
+disabled_patch_margin_top = 3
+disabled_patch_margin_bottom = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 38.0
+margin_right = 38.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+
+[node name="icon" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 10.0
+margin_bottom = 10.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+stretch_mode = 0
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 42.0
+margin_right = 62.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+
+[node name="text_lbl" type="Label" parent="HBoxContainer/CenterContainer2"]
+light_mask = 32
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 3.0
+margin_right = 20.0
+margin_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 20, 14 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = ExtResource( 6 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "OK"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[connection signal="button_down" from="btn" to="." method="_on_btn_button_down"]
+[connection signal="button_up" from="btn" to="." method="_on_btn_button_up"]
+[connection signal="pressed" from="btn" to="." method="_on_btn_pressed"]
+[connection signal="toggled" from="btn" to="." method="_on_btn_toggled"]

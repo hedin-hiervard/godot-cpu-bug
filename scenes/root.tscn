@@ -1,0 +1,180 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scenes/GUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://textures_packed/environment/bg1.tres" type="Texture" id=2]
+[ext_resource path="res://textures_packed/environment/Moon.tres" type="Texture" id=3]
+[ext_resource path="res://textures_packed/environment/Sun.tres" type="Texture" id=4]
+[ext_resource path="res://textures_packed/environment/bg2.tres" type="Texture" id=5]
+[ext_resource path="res://textures_packed/environment/bg3.tres" type="Texture" id=6]
+[ext_resource path="res://textures_packed/environment/bg4.tres" type="Texture" id=7]
+[ext_resource path="res://scenes/board.tscn" type="PackedScene" id=8]
+
+[sub_resource type="ParticlesMaterial" id=1]
+
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 100, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 980, 0 )
+angular_velocity = 1.1042e+21
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 27.27
+
+[sub_resource type="Curve2D" id=2]
+
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -281.548, 545.247, -207.956, 187.916, 207.956, -187.916, 128.014, 580.512, -29.0953, 72.1366, 29.0953, -72.1366, 370.892, 196.029, 21.8185, 64.1721, -21.8185, -64.1721, 363.247, 6.23663, 32.9572, 20.0323, -32.9572, -20.0323, 175.603, -200.209, 33.7661, 3.9093, -33.7661, -3.9093, -99.5773, -226.657, 67.3458, -57.1932, -67.3458, 57.1932, -315.084, -125.516, -7.56834, -137.165, 7.56834, 137.165, -420.126, 209.253, -14.8064, -39.225, 14.8064, 39.225, -371.549, 389.495, 0, 0, 0, 0, -285.639, 545.35 )
+}
+
+[sub_resource type="Theme" id=3]
+
+
+[sub_resource type="Environment" id=4]
+
+glow_enabled = true
+glow_intensity = 5.86
+
+[node name="root" type="Control"]
+
+[node name="GUI_layer" parent="." instance=ExtResource( 1 )]
+
+[node name="bg" type="ParallaxBackground" parent="."]
+editor/display_folded = true
+layer = -9
+
+[node name="sky_background" type="ColorRect" parent="bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.670588, 0.752941, 0.890196, 1 )
+
+[node name="sky_back" type="ParallaxLayer" parent="bg"]
+z_index = 10
+motion_scale = Vector2( 0.3, 0.3 )
+
+[node name="sky" type="Sprite" parent="bg/sky_back"]
+light_mask = 8
+texture = ExtResource( 2 )
+
+[node name="sky" type="ParallaxLayer" parent="bg"]
+z_index = 10
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="drops" type="Particles2D" parent="bg/sky"]
+position = Vector2( 138.599, -150 )
+z_index = 1000
+z_as_relative = false
+emitting = false
+amount = 200
+lifetime = 0.9
+randomness = 0.28
+visibility_rect = Rect2( -1000, 0, 2000, 100 )
+process_material = SubResource( 1 )
+
+[node name="clouds" type="Node2D" parent="bg/sky"]
+position = Vector2( 700, -238 )
+z_index = 1010
+z_as_relative = false
+
+[node name="luminaries_path" type="Path2D" parent="bg/sky"]
+position = Vector2( 3.65836, -10.4285 )
+scale = Vector2( 1, 1.00687 )
+curve = SubResource( 2 )
+
+[node name="moon_follower" type="PathFollow2D" parent="bg/sky/luminaries_path"]
+position = Vector2( -390.404, -3.89819 )
+scale = Vector2( 1.0132, 0.993177 )
+offset = 2061.95
+rotate = false
+
+[node name="moon" type="Sprite" parent="bg/sky/luminaries_path/moon_follower"]
+light_mask = 4
+z_index = 1
+texture = ExtResource( 3 )
+
+[node name="glow" type="Light2D" parent="bg/sky/luminaries_path/moon_follower/moon"]
+energy = 0.9
+range_height = 5.0
+range_z_max = 1500
+range_layer_min = -10
+range_layer_max = 5
+range_item_cull_mask = 4
+
+[node name="sun_follower" type="PathFollow2D" parent="bg/sky/luminaries_path"]
+position = Vector2( -28.9299, -222.893 )
+offset = 1605.15
+rotate = false
+
+[node name="sun" type="Sprite" parent="bg/sky/luminaries_path/sun_follower"]
+light_mask = 4
+z_index = 1
+texture = ExtResource( 4 )
+
+[node name="glow" type="Light2D" parent="bg/sky/luminaries_path/sun_follower/sun"]
+energy = 0.5
+range_height = 5.0
+range_z_max = 1500
+range_layer_min = -10
+range_layer_max = 5
+range_item_cull_mask = 4
+
+[node name="back_layer1" type="ParallaxLayer" parent="bg"]
+z_index = 20
+motion_scale = Vector2( 0.6, 0.6 )
+
+[node name="Sprite" type="Sprite" parent="bg/back_layer1"]
+light_mask = 0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 10000, 640 )
+
+[node name="back_layer2" type="ParallaxLayer" parent="bg"]
+z_index = 30
+motion_scale = Vector2( 0.7, 0.7 )
+
+[node name="Sprite" type="Sprite" parent="bg/back_layer2"]
+light_mask = 0
+texture = ExtResource( 6 )
+
+[node name="back_layer3" type="ParallaxLayer" parent="bg"]
+z_index = 40
+motion_scale = Vector2( 0.8, 0.8 )
+
+[node name="Sprite" type="Sprite" parent="bg/back_layer3"]
+light_mask = 0
+texture = ExtResource( 7 )
+
+[node name="modulator" type="CanvasModulate" parent="bg"]
+editor/display_folded = true
+
+[node name="tween" type="Tween" parent="bg/modulator"]
+
+[node name="boards" type="Control" parent="."]
+theme = SubResource( 3 )
+
+[node name="front_board" parent="boards" instance=ExtResource( 8 )]
+z_as_relative = false
+
+[node name="camera" type="Camera2D" parent="."]
+editor/display_folded = true
+current = true
+limit_smoothed = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = true
+smoothing_speed = 2.0
+
+[node name="tween_move" type="Tween" parent="camera"]
+
+[node name="tween_zoom" type="Tween" parent="camera"]
+
+[node name="tween" type="Tween" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[node name="clock" type="Node2D" parent="."]
+
+[node name="director" type="Node2D" parent="."]
+
+[node name="weather" type="ParallaxBackground" parent="."]
+layer = -8
+

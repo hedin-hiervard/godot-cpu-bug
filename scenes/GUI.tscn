@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/GUI.gd" type="Script" id=1]
+[ext_resource path="res://fonts/scumm-8.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://scenes/gui/typical_controls/typical_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/gui/slider.gd" type="Script" id=4]
+[ext_resource path="res://scenes/gui/hand.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/gui/notification_area.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/gui/debug_view.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Theme" id=1]
+
+
+[sub_resource type="Theme" id=2]
+
+
+[node name="GUI_layer" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = SubResource( 1 )
+
+[node name="Container" type="CenterContainer" parent="GUI"]
+editor/display_folded = true
+anchor_bottom = 1.0
+margin_left = 200.0
+margin_right = 200.0
+mouse_filter = 2
+
+[node name="exit_hint" type="HBoxContainer" parent="GUI/Container"]
+visible = false
+margin_left = -51.0
+margin_top = 285.0
+margin_right = 50.0
+margin_bottom = 315.0
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="GUI/Container/exit_hint"]
+margin_right = 51.0
+margin_bottom = 30.0
+
+[node name="lbl" type="Label" parent="GUI/Container/exit_hint/CenterContainer"]
+margin_top = 8.0
+margin_right = 67.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 67, 14 )
+custom_fonts/font = ExtResource( 2 )
+text = "TO_EXIT"
+
+[node name="CenterContainer2" type="CenterContainer" parent="GUI/Container/exit_hint"]
+margin_left = 55.0
+margin_right = 85.0
+margin_bottom = 30.0
+
+[node name="btn" parent="GUI/Container/exit_hint/CenterContainer2" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = SubResource( 2 )
+text = "E"
+
+[node name="hand_slider" type="Control" parent="GUI"]
+editor/display_folded = true
+anchor_right = 1.0
+margin_top = 370.0
+margin_bottom = 538.0
+rect_min_size = Vector2( 0, 200 )
+mouse_filter = 2
+script = ExtResource( 4 )
+
+[node name="hand" parent="GUI/hand_slider" instance=ExtResource( 5 )]
+anchor_top = 0.0
+mouse_filter = 2
+
+[node name="temp_slider" type="CenterContainer" parent="GUI"]
+anchor_right = 1.0
+margin_bottom = 200.0
+mouse_filter = 2
+script = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI/temp_slider"]
+margin_left = 512.0
+margin_top = 100.0
+margin_right = 512.0
+margin_bottom = 100.0
+
+[node name="util_label" type="Label" parent="GUI"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 62, 14 )
+custom_fonts/font = ExtResource( 2 )
+text = "placeholder"
+
+[node name="NotificationArea" parent="GUI" instance=ExtResource( 6 )]
+anchor_left = 1.0
+
+[node name="debug_view" parent="GUI" instance=ExtResource( 7 )]
+
+[connection signal="card_cancelled" from="." to="GUI/hand_slider/hand" method="_on_layer_card_cancelled"]
+[connection signal="card_played" from="." to="GUI/hand_slider/hand" method="_on_card_played"]
